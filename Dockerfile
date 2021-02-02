@@ -8,4 +8,5 @@ COPY jupyterhub_config.py .
 RUN pip install \
     dockerspawner==0.11.1 \
     oauthenticator==0.12.3 \
-    jupyterhub-idle-culler==1.0.0
+    jupyterhub-idle-culler==1.0.0 \
+    psycopg2-binary==2.8.6

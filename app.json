@@ -1,0 +1,12 @@
+{
+    "scripts": {
+        "dokku": {
+            "volumes": [
+                {
+                    "host": "/var/run/docker.sock",
+                    "app": "/var/run/docker.sock"
+                }
+            ]
+        }
+    }
+}

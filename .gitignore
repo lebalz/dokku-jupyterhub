@@ -1,0 +1,11 @@
+venv/
+uploads/
+running_games/
+__pycache__
+.DS_Store
+running
+.env
+.skip_setup
+flask_session
+static/previews/*
+tmp*

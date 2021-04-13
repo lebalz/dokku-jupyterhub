@@ -1,11 +1,30 @@
 # Dokku Jupyterhub
 
+The goal of this project is to run a dockerized [jupyterhub](https://jupyter.org/hub) instance on a [dokku](https://dokku.com/) server.
+
+Dokku will create and handle the docker network for the communication between jupyterhub and the jupyter notebooks (spawned as separate docker containers). Dokku performs a [Dockerfile](Dockerfile)-deploy.
+
+The spawned notebook image is based on a Docker image build from the [images/Dockerfile](images/Dockerfile) after each deploy.
+
+Data-Persistence is achieved by bind mounting dictionaries from the dokku host to the notebook containers. See [jupyterhub_config.py](jupyterhub_config.py) for all settings.
+
+## Dokku requirements
+
+The following plugins are required and must be installed on your dokku host:
+- [post-deploy-script @lebalz](https://github.com/lebalz/dokku-post-deploy-script)
+- [postgres](https://github.com/dokku/dokku-postgres)
+- [letsencrypt](https://github.com/dokku/dokku-letsencrypt)
+
+## Create jupyterhub
+
 Expecting dokku service name is set via 'APP', e.g. `APP='jupyterhub'`
 
 ```sh
 APP="jupyterhub"
 DOMAIN="your.domain.com"
 # create app
+############
+
 dokku apps:create $APP
 # ensure docker networks can be used
 dokku config:set $APP DOCKER_SCHEDULER=docker-local
@@ -34,7 +53,8 @@ dokku config:set $APP HUB_IP=$APP.web
 dokku postgres:create $APP
 dokku postgres:link $APP $APP
 
-# DATA PERSISTENCE
+# STOAREG AND DATA PERSISTENCE
+##############################
 
 mkdir -p /var/lib/dokku/data/storage/$APP/data
 dokku storage:mount $APP /var/lib/dokku/data/storage/$APP/data:/data
@@ -50,7 +70,8 @@ chown -R 1000:100 /var/lib/dokku/data/storage/$APP/data/colab
 dokku nginx:set $APP client-max-body-size 30m
 
 
-# OAUTH
+# AUTHENTICATORS - OAUTH
+########################
 ### edit your credentials: `nano /home/dokku/$APP/ENV`
 
 ## github oauth config

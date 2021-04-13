@@ -54,8 +54,8 @@ c.DockerSpawner.volumes = {
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
 }
 
-c.Spawner.cpu_limit = 1
-c.Spawner.mem_limit = '1G'
+c.Spawner.cpu_limit = 2
+c.Spawner.mem_limit = '2G'
 
 
 # Remove containers once they are stopped

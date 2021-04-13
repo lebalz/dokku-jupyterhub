@@ -102,9 +102,9 @@ c.JupyterHub.db_url = os.environ['DATABASE_URL']
 # Whitlelist users and admins
 # c.Authenticator.allowed_users = whitelist = set(['lebalz', 'test-user-reto'])
 
-c.Authenticator.admin_users = admin = set(['lebalz'])
+c.Authenticator.admin_users = admin = set(['lebalz', 'balthasar-hofer--gbsl-ch'])
 # c.Authenticator.username_map = {
-#     "balthasar_hofer__gbsl_ch": "lebalz",
+#     "balthasar-hofer--gbsl-ch": "lebalz",
 # }
 c.JupyterHub.admin_access = True
 # pwd = os.path.dirname(__file__)

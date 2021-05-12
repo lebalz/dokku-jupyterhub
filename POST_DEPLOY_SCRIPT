@@ -1,0 +1,4 @@
+#!/bin/bash
+# create and tag image...
+TAG=$(dokku config:get $APP DOCKER_JUPYTER_IMAGE)
+(cd images && docker build . -t $TAG)

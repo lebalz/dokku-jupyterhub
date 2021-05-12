@@ -1,54 +1,101 @@
 # Dokku Jupyterhub
 
-Expecting dokku service name `jupyterhub`
+The goal of this project is to run a dockerized [jupyterhub](https://jupyter.org/hub) instance on a [dokku](https://dokku.com/) server.
+
+Dokku will create and handle the docker network for the communication between jupyterhub and the jupyter notebooks (spawned as separate docker containers). Dokku performs a [Dockerfile](Dockerfile)-deploy.
+
+The spawned notebook image is based on a Docker image build from the [images/Dockerfile](images/Dockerfile) after each deploy.
+
+Data-Persistence is achieved by bind mounting directories from the dokku host to the notebook containers. See [jupyterhub_config.py](jupyterhub_config.py) for all settings.
+
+## Dokku requirements
+
+The following plugins are required and must be installed on your dokku host:
+- [post-deploy-script @lebalz](https://github.com/lebalz/dokku-post-deploy-script)
+- [postgres](https://github.com/dokku/dokku-postgres)
+- [letsencrypt](https://github.com/dokku/dokku-letsencrypt)
+
+## Create jupyterhub
+
+Expecting dokku service name is set via 'APP', e.g. `APP="jupyterhub"`
 
 ```sh
+APP="jupyterhub"
+DOMAIN="your.domain.com"
 # create app
-dokku apps:create jupyterhub
+############
+
+dokku apps:create $APP
 # ensure docker networks can be used
-dokku config:set jupyterhub DOCKER_SCHEDULER=docker-local
+dokku config:set $APP DOCKER_SCHEDULER=docker-local
 
 # configure port map for accessing hub
-dokku config:set jupyterhub DOKKU_PROXY_PORT_MAP="http:80:8000"
+dokku config:set $APP DOKKU_PROXY_PORT_MAP="http:80:8000"
 
 # mount docker socket to spawn new containers
-dokku storage:mount jupyterhub /var/run/docker.sock:/var/run/docker.sock
+dokku storage:mount $APP /var/run/docker.sock:/var/run/docker.sock
 
 # add a domain to it
-dokku domains:add jupyterhub "your.domain.com"
+dokku domains:add $APP $DOMAIN
 
 # create network
-dokku network:create jupyterhub
-dokku network:set jupyterhub bind-all-interfaces true
+dokku network:create $APP
+dokku network:set $APP bind-all-interfaces true
 
 # attach the network to the app
-dokku network:set jupyterhub attach-post-create jupyterhub
+dokku network:set $APP attach-post-create $APP
 
 # configure env variables for the network
-dokku config:set jupyterhub DOCKER_NETWORK_NAME=jupyterhub
-dokku config:set jupyterhub HUB_IP=jupyterhub.web
+dokku config:set $APP DOCKER_NETWORK_NAME=$APP
+dokku config:set $APP HUB_IP=$APP.web
 
 # create postgres service
-dokku postgres:create jupyterhub
-dokku postgres:link jupyterhub jupyterhub
+dokku postgres:create $APP
+dokku postgres:link $APP $APP
 
-# data persistence
-mkdir -p /var/lib/dokku/data/storage/jupyterhub/data
-dokku storage:mount jupyterhub /var/lib/dokku/data/storage/jupyterhub/data:/data
+# STOAREG AND DATA PERSISTENCE
+##############################
 
-# add cookie secret
-openssl rand -hex 32 > /var/lib/dokku/data/storage/jupyterhub/data/jupyterhub_cookie_secret
+mkdir -p /var/lib/dokku/data/storage/$APP/data
+dokku storage:mount $APP /var/lib/dokku/data/storage/$APP/data:/data
+
+## create shared directories
+mkdir -p /var/lib/dokku/data/storage/$APP/data/shared
+mkdir -p /var/lib/dokku/data/storage/$APP/data/colab
+
+## grant user jovian:users access to colab
+chown -R 1000:100 /var/lib/dokku/data/storage/$APP/data/colab
+
+# increase max body upload size
+dokku nginx:set $APP client-max-body-size 30m
+
+
+# AUTHENTICATORS - OAUTH
+########################
+### edit your credentials: `nano /home/dokku/$APP/ENV`
+
+## github oauth config
+# dokku config:set $APP OAUTH_CALLBACK_URL="https://$DOMAIN/hub/oauth_callback"
+# dokku config:set $APP GITHUB_CLIENT_ID="XXXXXXXXXXXXXX"
+# dokku config:set $APP GITHUB_CLIENT_SECRET="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+
+## azure active directory
+dokku config:set $APP AAD_TENANT_ID="xxxxxx-xxxxxx-xxxxxxx"
+dokku config:set $APP AAD_OAUTH_CALLBACK_URL="https://$DOMAIN/hub/oauth_callback"
+dokku config:set $APP AAD_CLIENT_ID="xxxxxx-xxxxxx-xxxxxxx"
+dokku config:set $APP AAD_CLIENT_SECRET="xxxxxx-xxxxxx-xxxxxxx"
+
 ```
 
 ## Images
 
-Make sure all used images are available on the system
+Make sure all used images are available on the system. Either pull them yourself or setup your own image (e.g. with a postdeploy script).
 
 ```sh
-docker pull jupyterlab/scipy-notebook:latest
+docker pull jupyter/scipy-notebook:latest
 
 # and set the network as default
-dokku config:set jupyterhub DOCKER_JUPYTER_IMAGE="jupyter/scipy-notebook:latest"
+dokku config:set $APP DOCKER_JUPYTER_IMAGE="jupyter/scipy-notebook:latest"
 ```
 
 ### initial local setup
@@ -65,6 +112,7 @@ Make sure:
 - no pagerules with permanent redirects e.g. from Cloudflare exists
 
 ```sh
-dokku config:set --no-restart jupyterhub DOKKU_LETSENCRYPT_EMAIL=your@email.address
-dokku letsencrypt jupyterhub
+MAIL="your@email.address"
+dokku config:set --no-restart $APP DOKKU_LETSENCRYPT_EMAIL=$MAIL
+dokku letsencrypt $APP
 ```

@@ -6,7 +6,7 @@ Dokku will create and handle the docker network for the communication between ju
 
 The spawned notebook image is based on a Docker image build from the [images/Dockerfile](images/Dockerfile) after each deploy.
 
-Data-Persistence is achieved by bind mounting dictionaries from the dokku host to the notebook containers. See [jupyterhub_config.py](jupyterhub_config.py) for all settings.
+Data-Persistence is achieved by bind mounting directories from the dokku host to the notebook containers. See [jupyterhub_config.py](jupyterhub_config.py) for all settings.
 
 ## Dokku requirements
 
@@ -17,7 +17,7 @@ The following plugins are required and must be installed on your dokku host:
 
 ## Create jupyterhub
 
-Expecting dokku service name is set via 'APP', e.g. `APP='jupyterhub'`
+Expecting dokku service name is set via 'APP', e.g. `APP="jupyterhub"`
 
 ```sh
 APP="jupyterhub"

@@ -12,6 +12,7 @@ RUN pip3 install --no-cache \
     xeus-python \
     notebook \
     playsound==1.2.2 \
+    numpy==1.20.3 \
     gTTs==2.2.2
 
 # modify the playsound and gtts package to work on jupyter

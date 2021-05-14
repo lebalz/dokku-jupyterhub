@@ -9,3 +9,4 @@ running
 flask_session
 static/previews/*
 tmp*
+.hfr-jupyter.sh

@@ -13,7 +13,8 @@ RUN pip3 install --no-cache \
     playsound==1.2.2 \
     numpy==1.20.3 \
     gTTs==2.2.2 \
-    jupyterlab-drawio==0.9.0
+    jupyterlab-drawio==0.9.0 \
+    jupyterlab-topbar==0.6.1
 
 
 # modify the playsound and gtts package to work on jupyter

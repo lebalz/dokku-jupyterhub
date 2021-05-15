@@ -1,5 +1,5 @@
 # Do not forget to pin down the version
-FROM jupyterhub/jupyterhub:1.3.0
+FROM jupyterhub/jupyterhub:1.4.1
 
 # Install dependencies (for advanced authentication and spawning)
 RUN pip3 install \

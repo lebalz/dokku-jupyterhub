@@ -7,13 +7,14 @@ LABEL description="Jupyter Notebook image with debugging support"
 
 # all additional pip packages
 RUN pip3 install --no-cache \
-    jupyterhub==1.3.0 \
+    jupyterhub==1.4.1 \
     smartphone-connector==0.0.115 \
-    xeus-python \
-    notebook \
+    notebook==6.3.0 \
     playsound==1.2.2 \
     numpy==1.20.3 \
-    gTTs==2.2.2
+    gTTs==2.2.2 \
+    jupyterlab-drawio==0.9.0
+
 
 # modify the playsound and gtts package to work on jupyter
 COPY playsound_extension.py .

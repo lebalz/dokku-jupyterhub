@@ -52,6 +52,11 @@ dokku config:set $APP HUB_IP=$APP.web
 # create postgres service
 dokku postgres:create $APP
 dokku postgres:link $APP $APP
+## The URI should start with postgresql:// instead of postgres://. SQLAlchemy used to accept both, but has removed support for the postgres name.
+DB_URL=$(dokku config:get $APP DATABASE_URL)
+dokku config:set --no-restart $APP DATABASE_URL "${DB_URL//postgres:\/\//postgresql:\/\/}"
+
+
 
 # STOAREG AND DATA PERSISTENCE
 ##############################

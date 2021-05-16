@@ -15,7 +15,9 @@ RUN pip3 install --no-cache \
     gTTs==2.2.2 \
     jupyterlab-drawio==0.9.0 \
     jupyterlab-topbar==0.6.1 \
-    jupyterlab-system-monitor==0.8.0
+    jupyterlab-system-monitor==0.8.0 \
+    Pillow==8.2.0
+    
 
 
 # modify the playsound and gtts package to work on jupyter

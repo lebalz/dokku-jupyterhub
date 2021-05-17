@@ -26,15 +26,21 @@ c.DockerSpawner.use_internal_ip = True
 c.DockerSpawner.extra_host_config = {'network_mode': os.environ['DOCKER_NETWORK_NAME']}
 
 
+def ensure_dir(dir_path):
+    if not dir_path.exists():
+        dir_path.mkdir(exist_ok=True)
+    if dir_path.group() != 'users':
+        shutil.chown(str(dir_path), user=1000, group=100)
+
+
 def set_user_permission(spawner):
     '''ensures the correct access rights for the jupyterhub user group'''
     username = spawner.user.name
     container_data = os.environ.get('DATA_VOLUME_CONTAINER', '/data')
     data_dir = Path(container_data, f'users/{username}')
-    if not data_dir.exists():
-        data_dir.mkdir(exist_ok=True)
-    if data_dir.group() != 'users':
-        shutil.chown(str(data_dir), user=1000, group=100)
+    ensure_dir(data_dir)
+    settings_dir = Path(container_data, f'user-settings/{username}')
+    ensure_dir(settings_dir)
 
 
 c.Spawner.pre_spawn_hook = set_user_permission
@@ -44,12 +50,14 @@ c.Spawner.pre_spawn_hook = set_user_permission
 # user `jovyan`, and set the notebook directory to `/home/jovyan/work`.
 # We follow the same convention.
 
+
 notebook_dir = os.environ.get('DOCKER_NOTEBOOK_DIR') or '/home/jovyan/work'
 c.DockerSpawner.notebook_dir = notebook_dir
 # Mount the real user's Docker volume on the host to the notebook user's
 # notebook directory in the container
 c.DockerSpawner.volumes = {
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
+    '/var/lib/dokku/data/storage/hfr-jupyterhub/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab/user-settings', 'mode': 'rw'},
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/shared': {'bind': '/home/jovyan/work/shared', 'mode': 'ro'},
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
 }
@@ -60,12 +68,12 @@ c.DockerSpawner.extra_host_config = {
 }
 #    'mem_swappiness': 0
 
-# shutdown the server after no activity for an hour
-c.NotebookApp.shutdown_no_activity_timeout = 60 * 60
-# shutdown kernels after no activity for 20 minutes
-c.MappingKernelManager.cull_idle_timeout = 20 * 60
-# check for idle kernels every two minutes
-c.MappingKernelManager.cull_interval = 2 * 60
+# # shutdown the server after no activity for an hour
+# c.NotebookApp.shutdown_no_activity_timeout = 60 * 60
+# # shutdown kernels after no activity for 20 minutes
+# c.MappingKernelManager.cull_idle_timeout = 20 * 60
+# # check for idle kernels every two minutes
+# c.MappingKernelManager.cull_interval = 2 * 60
 
 
 # Remove containers once they are stopped

@@ -3,7 +3,7 @@ FROM jupyter/minimal-notebook:latest
 
 LABEL maintainer="hfr"
 LABEL version="0.1"
-LABEL description="Jupyter Notebook image with debugging support"
+LABEL description="Jupyter Notebook image"
 
 # all additional pip packages
 RUN pip3 install --no-cache \
@@ -27,6 +27,9 @@ RUN pip3 install --no-cache \
 # modify the playsound and gtts package to work on jupyter
 COPY playsound_extension.py .
 COPY gtts_extension.py .
+# check where to put the overrides file within a jupyterlab container: 
+#       jupyter lab path
+COPY overrides.json /opt/conda/share/jupyter/lab/overrides.json
 
 # the following command returns the install location of the given pip package
 #       `python3 -c "import playsound as _; print(_.__file__)"`

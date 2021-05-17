@@ -18,7 +18,8 @@ RUN pip3 install --no-cache \
     jupyterlab-system-monitor==0.8.0 \
     Pillow==8.2.0 \
     XlsxWriter==1.4.3 \
-    pandas==1.2.4
+    pandas==1.2.4 \
+    xlrd==2.0.1
     
 
 

@@ -19,7 +19,8 @@ RUN pip3 install --no-cache \
     Pillow==8.2.0 \
     XlsxWriter==1.4.3 \
     pandas==1.2.4 \
-    xlrd==2.0.1
+    xlrd==2.0.1 \
+    openpyxl==3.0.7
     
 
 

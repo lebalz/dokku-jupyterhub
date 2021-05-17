@@ -54,8 +54,11 @@ c.DockerSpawner.volumes = {
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
 }
 
-c.Spawner.cpu_limit = 2
-c.Spawner.mem_limit = '2G'
+c.DockerSpawner.extra_host_config = {
+    'mem_limit': '350m',
+    'memswap_limit': '-1'
+}
+#    'mem_swappiness': 0
 
 # shutdown the server after no activity for an hour
 c.NotebookApp.shutdown_no_activity_timeout = 60 * 60

@@ -3,8 +3,30 @@ import sys
 from pathlib import Path
 import shutil
 from oauthenticator.my_azuread import MyAzureAdOAuthenticator
+from dockerspawner import DockerSpawner
 
-c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
+ADMINS = set(['balthasar-hofer--gbsl-ch'])
+APP_NAME = 'hfr-jupyterhub'
+
+
+class MyDockerSpawner(DockerSpawner):
+
+    def start(self):
+        username = self.user.name
+        if self.user.name in ADMINS:
+            shared_mode = 'rw'
+        else:
+            shared_mode = 'ro'
+        self.volumes = {
+            f'/var/lib/dokku/data/storage/{APP_NAME}/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
+            f'/var/lib/dokku/data/storage/{APP_NAME}/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
+            f'/var/lib/dokku/data/storage/{APP_NAME}/data/shared': {'bind': '/home/jovyan/work/shared', 'mode': shared_mode},
+            f'/var/lib/dokku/data/storage/{APP_NAME}/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
+            }
+        return super().start()
+
+
+c.JupyterHub.spawner_class = MyDockerSpawner
 c.JupyterHub.last_activity_interval = 150
 c.JupyterHub.shutdown_on_logout = True
 
@@ -57,12 +79,6 @@ notebook_dir = os.environ.get('DOCKER_NOTEBOOK_DIR') or '/home/jovyan/work'
 c.DockerSpawner.notebook_dir = notebook_dir
 # Mount the real user's Docker volume on the host to the notebook user's
 # notebook directory in the container
-c.DockerSpawner.volumes = {
-    '/var/lib/dokku/data/storage/hfr-jupyterhub/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
-    '/var/lib/dokku/data/storage/hfr-jupyterhub/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
-    '/var/lib/dokku/data/storage/hfr-jupyterhub/data/shared': {'bind': '/home/jovyan/work/shared', 'mode': 'ro'},
-    '/var/lib/dokku/data/storage/hfr-jupyterhub/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
-}
 
 c.DockerSpawner.extra_host_config = {
     'mem_limit': '350m',
@@ -122,22 +138,12 @@ c.JupyterHub.db_url = os.environ['DATABASE_URL']
 # Whitlelist users and admins
 # c.Authenticator.allowed_users = whitelist = set(['lebalz', 'test-user-reto'])
 
-c.Authenticator.admin_users = admin = set(['lebalz', 'balthasar-hofer--gbsl-ch'])
+c.Authenticator.admin_users = ADMINS
 # c.Authenticator.username_map = {
 #     "balthasar-hofer--gbsl-ch": "lebalz",
 # }
+
+# admin can access all other users
 c.JupyterHub.admin_access = True
-# pwd = os.path.dirname(__file__)
-# with open(os.path.join(pwd, 'userlist')) as f:
-#     for line in f:
-#         if not line:
-#             continue
-#         parts = line.split()
-#         # in case of newline at the end of userlist file
-#         if len(parts) >= 1:
-#             name = parts[0]
-#             whitelist.add(name)
-#             if len(parts) > 1 and parts[1] == 'admin':
-#                 admin.add(name)
 
 c.Spawner.default_url = '/lab'

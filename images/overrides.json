@@ -16,7 +16,7 @@
       "rulers": [],
       "codeFolding": true,
       "lineWiseCopyCut": true
-    },
+    }
   },
   "@jupyterlab/filebrowser-extension:browser": {
     "navigateToCurrentDirectory": true,

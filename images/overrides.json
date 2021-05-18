@@ -1,5 +1,5 @@
 {
-  "@/@jupyterlab/notebook-extension:tracker": {
+  "@jupyterlab/notebook-extension:tracker": {
     "kernelShutdown": true
   }
 }

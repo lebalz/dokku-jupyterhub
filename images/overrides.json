@@ -8,5 +8,8 @@
   },
   "@jupyterlab/extensionmanager-extension:plugin": {
     "enabled": false
+  },
+  "@ijmbarr/jupyterlab_spellchecker:plugin" {
+    "language": "de-ch"
   }
 }

@@ -21,7 +21,8 @@ RUN pip3 install --no-cache \
     openpyxl==3.0.7 \
     ipywidgets==7.6.3 \
     ipympl==0.7.0 \
-    jupyterlab-spellchecker==0.5.2
+    jupyterlab-spellchecker==0.5.2 \
+    aquirdturtle_collapsible_headings==3.0.1
     
 
 

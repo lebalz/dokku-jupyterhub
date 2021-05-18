@@ -1,11 +1,6 @@
 {
   "@jupyterlab/notebook-extension:tracker": {
-    "kernelShutdown": true,
-    "codeCellConfig": {
-      "lineNumbers": true,
-      "codeFolding": true,
-      "lineWiseCopyCut": true
-    }
+    "kernelShutdown": true
   },
   "@jupyterlab/filebrowser-extension:browser": {
     "navigateToCurrentDirectory": true,

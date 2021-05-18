@@ -54,9 +54,10 @@ dokku postgres:create $APP
 dokku postgres:link $APP $APP
 ## The URI should start with postgresql:// instead of postgres://. SQLAlchemy used to accept both, but has removed support for the postgres name.
 DB_URL=$(dokku config:get $APP DATABASE_URL)
-dokku config:set --no-restart $APP DATABASE_URL "${DB_URL//postgres:\/\//postgresql:\/\/}"
+dokku config:set --no-restart $APP DATABASE_URL="${DB_URL//postgres:\/\//postgresql:\/\/}"
 
-
+# configure post deploy script
+dokku config:set --no-restart $APP DOKKU_POST_DEPLOY_SCRIPT_DEPENDENCIES="images/Dockerfile;images/playsound_extension.py;images/gtts_extension.py;images/overrides.json"
 
 # STOAREG AND DATA PERSISTENCE
 ##############################

@@ -28,7 +28,7 @@ c.DockerSpawner.extra_host_config = {'network_mode': os.environ['DOCKER_NETWORK_
 
 def ensure_dir(dir_path):
     if not dir_path.exists():
-        dir_path.mkdir(exist_ok=True)
+        dir_path.mkdir_p(exist_ok=True)
     if dir_path.group() != 'users':
         shutil.chown(str(dir_path), user=1000, group=100)
 
@@ -37,10 +37,12 @@ def set_user_permission(spawner):
     '''ensures the correct access rights for the jupyterhub user group'''
     username = spawner.user.name
     container_data = os.environ.get('DATA_VOLUME_CONTAINER', '/data')
-    data_dir = Path(container_data, f'users/{username}')
-    ensure_dir(data_dir)
-    settings_dir = Path(container_data, f'user-settings/{username}')
-    ensure_dir(settings_dir)
+    data_root = Path(container_data, 'users')
+    ensure_dir(data_root)
+    ensure_dir(data_root.joinpath(username))
+    settings_root = Path(container_data, 'user-settings')
+    ensure_dir(settings_root)
+    ensure_dir(settings_root.joinpath(username))
 
 
 c.Spawner.pre_spawn_hook = set_user_permission

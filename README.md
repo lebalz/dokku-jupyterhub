@@ -121,3 +121,10 @@ MAIL="your@email.address"
 dokku config:set --no-restart $APP DOKKU_LETSENCRYPT_EMAIL=$MAIL
 dokku letsencrypt $APP
 ```
+
+
+## Jupyterlab Settings
+
+https://jupyterlab.readthedocs.io/en/latest/user/directories.html
+
+--> edit the [overrides.json](images/overrides.json).

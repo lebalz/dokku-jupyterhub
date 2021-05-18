@@ -59,7 +59,7 @@ c.DockerSpawner.notebook_dir = notebook_dir
 # notebook directory in the container
 c.DockerSpawner.volumes = {
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
-    '/var/lib/dokku/data/storage/hfr-jupyterhub/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab/user-settings', 'mode': 'rw'},
+    '/var/lib/dokku/data/storage/hfr-jupyterhub/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/shared': {'bind': '/home/jovyan/work/shared', 'mode': 'ro'},
     '/var/lib/dokku/data/storage/hfr-jupyterhub/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
 }

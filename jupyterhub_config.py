@@ -14,7 +14,7 @@ class MyDockerSpawner(DockerSpawner):
     def start(self):
         username = self.user.name
         if self.user.name in ADMINS:
-            shared_mode = 'rw'
+            shared_mode = 'ro'
         else:
             shared_mode = 'ro'
         self.volumes = {

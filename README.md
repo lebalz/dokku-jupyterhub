@@ -125,6 +125,6 @@ dokku letsencrypt $APP
 
 ## Jupyterlab Settings
 
-https://jupyterlab.readthedocs.io/en/latest/user/directories.html
+[Jupyterlab Docs](https://jupyterlab.readthedocs.io/en/latest/user/directories.html)
 
 --> edit the [overrides.json](images/overrides.json).

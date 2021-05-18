@@ -28,7 +28,7 @@ c.DockerSpawner.extra_host_config = {'network_mode': os.environ['DOCKER_NETWORK_
 
 def ensure_dir(dir_path):
     if not dir_path.exists():
-        dir_path.mkdir_p(exist_ok=True)
+        dir_path.mkdir(exist_ok=True)
     if dir_path.group() != 'users':
         shutil.chown(str(dir_path), user=1000, group=100)
 

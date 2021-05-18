@@ -16,11 +16,11 @@ COPY my_azuread.py .
 
 RUN mv my_azuread.py $(dirname "$(python3 -c "import oauthenticator as _; print(_.__file__)")")/my_azuread.py
 
-# Copy the JupyterHub configuration in the container
+# Copy the JupyterHub configuration into the container
 COPY jupyterhub_config.py .
 
-# Copy the POST_DEPLOY_SCRIPT in the container
+# Copy the POST_DEPLOY_SCRIPT into the container
 COPY POST_DEPLOY_SCRIPT .
 
-# Copy the notebook dockerfile in the container
+# Copy the notebook dockerfile into the container
 COPY images ./images

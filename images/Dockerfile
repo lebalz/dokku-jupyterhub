@@ -16,11 +16,17 @@ RUN pip3 install --no-cache \
     jupyterlab-drawio==0.9.0 \
     jupyterlab-topbar==0.6.1 \
     jupyterlab-system-monitor==0.8.0 \
+    jupyter-resource-usage==0.6.0 \
     Pillow==8.2.0 \
     XlsxWriter==1.4.3 \
     pandas==1.2.4 \
     xlrd==2.0.1 \
-    openpyxl==3.0.7
+    openpyxl==3.0.7 \
+    ipywidgets==7.6.3 \
+    bokeh==2.3.2 \
+    ipympl==0.7.0 \
+    luxwidget==0.1.5 \
+    jupyterlab-spellchecker==0.5.2
     
 
 

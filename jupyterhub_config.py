@@ -14,7 +14,7 @@ class MyDockerSpawner(DockerSpawner):
     def start(self):
         username = self.user.name
         if self.user.name in ADMINS:
-            shared_mode = 'ro'
+            shared_mode = 'rw'
         else:
             shared_mode = 'ro'
         self.volumes = {
@@ -22,7 +22,7 @@ class MyDockerSpawner(DockerSpawner):
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/shared': {'bind': '/home/jovyan/work/shared', 'mode': shared_mode},
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
-            }
+        }
         return super().start()
 
 
@@ -85,13 +85,6 @@ c.DockerSpawner.extra_host_config = {
     'memswap_limit': '-1'
 }
 #    'mem_swappiness': 0
-
-# # shutdown the server after no activity for an hour
-# c.NotebookApp.shutdown_no_activity_timeout = 60 * 60
-# # shutdown kernels after no activity for 20 minutes
-# c.MappingKernelManager.cull_idle_timeout = 20 * 60
-# # check for idle kernels every two minutes
-# c.MappingKernelManager.cull_interval = 2 * 60
 
 
 # Remove containers once they are stopped

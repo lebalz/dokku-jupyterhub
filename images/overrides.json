@@ -1,5 +1,12 @@
 {
   "@jupyterlab/notebook-extension:tracker": {
     "kernelShutdown": true
+  },
+  "@jupyterlab/filebrowser-extension:browser": {
+    "navigateToCurrentDirectory": true,
+    "useFuzzyFilter": true
+  },
+  "@jupyterlab/extensionmanager-extension:plugin": {
+    "enabled": false
   }
 }

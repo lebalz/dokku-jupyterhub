@@ -69,7 +69,8 @@ dokku storage:mount $APP /var/lib/dokku/data/storage/$APP/data:/data
 mkdir -p /var/lib/dokku/data/storage/$APP/data/shared
 mkdir -p /var/lib/dokku/data/storage/$APP/data/colab
 
-## grant user jovian:users access to colab
+## grant user jovian:users access to shared mounted volumes
+chown -R 1000:100 /var/lib/dokku/data/storage/$APP/data/shared
 chown -R 1000:100 /var/lib/dokku/data/storage/$APP/data/colab
 
 # increase max body upload size

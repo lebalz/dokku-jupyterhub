@@ -10,3 +10,4 @@ flask_session
 static/previews/*
 tmp*
 .hfr-jupyter.sh
+.vscode/settings.json

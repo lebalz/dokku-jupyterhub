@@ -29,7 +29,8 @@ COPY playsound_extension.py .
 COPY gtts_extension.py .
 # check where to put the overrides file within a jupyterlab container: 
 #       jupyter lab path
-COPY overrides.json /opt/conda/share/jupyter/lab/
+COPY overrides.json .
+# RUN /opt/conda/share/jupyter/lab/
 
 # the following command returns the install location of the given pip package
 #       `python3 -c "import playsound as _; print(_.__file__)"`

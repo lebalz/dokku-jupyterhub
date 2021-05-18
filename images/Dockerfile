@@ -25,7 +25,7 @@ RUN pip3 install --no-cache \
     ipywidgets==7.6.3 \
     bokeh==2.3.2 \
     ipympl==0.7.0 \
-    luxwidget==0.1.5 \
+    lux-widget==0.1.5 \
     jupyterlab-spellchecker==0.5.2
     
 

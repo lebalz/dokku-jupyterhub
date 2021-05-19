@@ -59,7 +59,7 @@ dokku config:set --no-restart $APP DATABASE_URL="${DB_URL//postgres:\/\//postgre
 # configure post deploy script
 dokku config:set --no-restart $APP DOKKU_POST_DEPLOY_SCRIPT_DEPENDENCIES="images/Dockerfile;images/playsound_extension.py;images/gtts_extension.py;images/overrides.json"
 
-# STOAREG AND DATA PERSISTENCE
+# STOARGE AND DATA PERSISTENCE
 ##############################
 
 mkdir -p /var/lib/dokku/data/storage/$APP/data
@@ -98,11 +98,25 @@ dokku config:set $APP AAD_CLIENT_SECRET="xxxxxx-xxxxxx-xxxxxxx"
 
 Make sure all used images are available on the system. Either pull them yourself or setup your own image (e.g. with a postdeploy script).
 
+### Pull yourself
+1. rename the [POST_DEPLOY_SCRIPT](POST_DEPLOY_SCRIPT), otherwise it will try to build the image... (`mv POST_DEPLOY_SCRIPT _POST_DEPLOY_SCRIPT`)
+2. pull an image and configure your jupyterhub to use it:
 ```sh
 docker pull jupyter/scipy-notebook:latest
 
 # and set the network as default
 dokku config:set $APP DOCKER_JUPYTER_IMAGE="jupyter/scipy-notebook:latest"
+```
+
+### Setup postdeploy script
+(ensure you have the [post-deploy-script](https://github.com/lebalz/dokku-post-deploy-script) plugin installed on your dokku host)
+
+1. Add a [POST_DEPLOY_SCRIPT](POST_DEPLOY_SCRIPT) to the root (already done here).
+2. Configure a `DOCKER_JUPYTER_IMAGE` on your host (e.g. `dokku config:set $APP DOCKER_JUPYTER_IMAGE="jupyter/lebalz:latest"`)
+3. Setup your [images/Dockerfile]
+4. Make sure that all your Dependencies to build your image are configured proberly on your dokku host under `DOKKU_POST_DEPLOY_SCRIPT_DEPENDENCIES`:
+```sh
+dokku config:set --no-restart $APP DOKKU_POST_DEPLOY_SCRIPT_DEPENDENCIES="images/Dockerfile;images/playsound_extension.py;images/gtts_extension.py;images/overrides.json"
 ```
 
 ### initial local setup

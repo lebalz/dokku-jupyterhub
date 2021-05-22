@@ -22,7 +22,8 @@ RUN pip3 install --no-cache \
     ipywidgets==7.6.3 \
     ipympl==0.7.0 \
     jupyterlab-spellchecker==0.5.2 \
-    aquirdturtle_collapsible_headings==3.0.1
+    aquirdturtle_collapsible_headings==3.0.1 \
+    scipy==1.6.3
     
 
 

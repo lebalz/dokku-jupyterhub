@@ -5,8 +5,9 @@ import shutil
 from oauthenticator.my_azuread import MyAzureAdOAuthenticator
 from dockerspawner import DockerSpawner
 
+PREFIX = 'hfr'
 ADMINS = set(['balthasar-hofer--gbsl-ch'])
-APP_NAME = 'hfr-jupyterhub'
+APP_NAME = f'{PREFIX}-jupyterhub'
 
 
 class MyDockerSpawner(DockerSpawner):
@@ -17,12 +18,18 @@ class MyDockerSpawner(DockerSpawner):
             shared_mode = 'rw'
         else:
             shared_mode = 'ro'
+        root = Path(notebook_dir)
         self.volumes = {
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
-            f'/var/lib/dokku/data/storage/{APP_NAME}/data/shared': {'bind': '/home/jovyan/work/shared', 'mode': shared_mode},
-            f'/var/lib/dokku/data/storage/{APP_NAME}/data/colab': {'bind': '/home/jovyan/work/colab', 'mode': 'rw'}
+            f'/var/lib/dokku/data/storage/{APP_NAME}/data/shared': {'bind': str(root.joinpath('shared')), 'mode': shared_mode},
+            f'/var/lib/dokku/data/storage/{APP_NAME}/data/colab': {'bind': str(root.joinpath('colab')), 'mode': 'rw'}
         }
+        if self.user.name in ADMINS:
+            self.volumes[f'/var/lib/dokku/data/storage/{APP_NAME}/data/users'] = {
+                'bind': str(root.joinpath('users')),
+                'mode': 'rw'
+            }
         return super().start()
 
 
@@ -89,7 +96,7 @@ c.DockerSpawner.extra_host_config = {
 
 # Remove containers once they are stopped
 c.DockerSpawner.remove_containers = True
-c.DockerSpawner.name_template = 'hfr-{prefix}-{username}'
+c.DockerSpawner.name_template = f'{PREFIX}{"-{prefix}-{username}"}'
 # For debugging arguments passed to spawned containers
 c.DockerSpawner.debug = False
 
@@ -127,14 +134,8 @@ c.JupyterHub.cookie_secret_file = os.path.join(data_dir,
 
 c.JupyterHub.db_url = os.environ['DATABASE_URL']
 
-
 # Whitlelist users and admins
-# c.Authenticator.allowed_users = whitelist = set(['lebalz', 'test-user-reto'])
-
 c.Authenticator.admin_users = ADMINS
-# c.Authenticator.username_map = {
-#     "balthasar-hofer--gbsl-ch": "lebalz",
-# }
 
 # admin can access all other users
 c.JupyterHub.admin_access = True

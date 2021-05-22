@@ -8,6 +8,7 @@ from dockerspawner import DockerSpawner
 PREFIX = 'hfr'
 ADMINS = set(['balthasar-hofer--gbsl-ch'])
 APP_NAME = f'{PREFIX}-jupyterhub'
+HOME_PATH = '/home/jovyan'  # 'home/jovyan/work'
 
 
 class MyDockerSpawner(DockerSpawner):
@@ -82,7 +83,7 @@ c.Spawner.pre_spawn_hook = set_user_permission
 # We follow the same convention.
 
 
-notebook_dir = os.environ.get('DOCKER_NOTEBOOK_DIR') or '/home/jovyan/work'
+notebook_dir = os.environ.get('DOCKER_NOTEBOOK_DIR') or HOME_PATH
 c.DockerSpawner.notebook_dir = notebook_dir
 # Mount the real user's Docker volume on the host to the notebook user's
 # notebook directory in the container

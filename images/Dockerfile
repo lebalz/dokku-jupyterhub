@@ -28,8 +28,8 @@ RUN pip3 install --no-cache \
 
 
 # modify the playsound and gtts package to work on jupyter
-COPY playsound_extension.py .
-COPY gtts_extension.py .
+# COPY playsound_extension.py .
+# COPY gtts_extension.py .
 # check where to put the overrides file within a jupyterlab container: 
 #       jupyter lab path
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/
@@ -37,5 +37,5 @@ COPY overrides.json /opt/conda/share/jupyter/lab/settings/
 # the following command returns the install location of the given pip package
 #       `python3 -c "import playsound as _; print(_.__file__)"`
 # `tee -a` appends the piped output of the `cat` command to the specified file
-RUN cat playsound_extension.py | tee -a $(dirname "$(python3 -c "import playsound as _; print(_.__file__)")")/playsound.py
-RUN cat gtts_extension.py | tee -a $(dirname "$(python3 -c "import gtts as _; print(_.__file__)")")/tts.py
+# RUN cat playsound_extension.py | tee -a $(dirname "$(python3 -c "import playsound as _; print(_.__file__)")")/playsound.py
+# RUN cat gtts_extension.py | tee -a $(dirname "$(python3 -c "import gtts as _; print(_.__file__)")")/tts.py

@@ -8,7 +8,7 @@ from dockerspawner import DockerSpawner
 PREFIX = 'hfr'
 ADMINS = set(['balthasar-hofer--gbsl-ch'])
 APP_NAME = f'{PREFIX}-jupyterhub'
-HOME_PATH = '/home/jovyan'  # 'home/jovyan/work'
+HOME_PATH = 'home/jovyan/work'
 
 
 class MyDockerSpawner(DockerSpawner):

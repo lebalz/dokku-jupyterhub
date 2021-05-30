@@ -22,6 +22,11 @@ MEMBERSHIPS = {
     'gael-schwab--edu-gbsl-ch': set(['data-science'])
 }
 
+PERFORMANCE_LIMITS = {
+    'balthasar-hofer--gbsl-ch': '8G',
+    'gael-schwab--edu-gbsl-ch': '1G'
+}
+
 
 class MyDockerSpawner(DockerSpawner):
 
@@ -59,6 +64,12 @@ class MyDockerSpawner(DockerSpawner):
             self.volumes[f'{APP_ROOT_HOST}/data/users'] = {
                 'bind': str(root.joinpath('users')),
                 'mode': 'rw'
+            }
+
+        if self.user.name in PERFORMANCE_LIMITS:
+            self.extra_host_config = {
+                'mem_limit': PERFORMANCE_LIMITS[self.user.name],
+                'memswap_limit': '-1'
             }
         return super().start()
 

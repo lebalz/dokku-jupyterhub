@@ -10,6 +10,17 @@ ADMINS = set(['balthasar-hofer--gbsl-ch'])
 APP_NAME = f'{PREFIX}-jupyterhub'
 HOME_PATH = '/home/jovyan/work'
 
+VOLUME_GROUPS = {
+    'data-science': [
+        f'/var/lib/dokku/data/storage/{APP_NAME}/unbackuped-data/cc-webvideo-dataset'
+    ]
+}
+
+MEMBERSHIPS = {
+    'balthasar-hofer--gbsl-ch': set(['data-science']),
+    'gael-schwab--edu-gbsl-ch': set(['data-science'])
+}
+
 
 class MyDockerSpawner(DockerSpawner):
 
@@ -20,12 +31,23 @@ class MyDockerSpawner(DockerSpawner):
         else:
             shared_mode = 'ro'
         root = Path(notebook_dir)
+        # basic volumes
         self.volumes = {
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/shared': {'bind': str(root.joinpath('shared')), 'mode': shared_mode},
             f'/var/lib/dokku/data/storage/{APP_NAME}/data/colab': {'bind': str(root.joinpath('colab')), 'mode': 'rw'}
         }
+
+        # additional volumes for assigned students only
+        if self.user.name in MEMBERSHIPS:
+            for group in MEMBERSHIPS[self.user.name]:
+                for group_dir in VOLUME_GROUPS[group]:
+                    self.volumes[group_dir] = {
+                        'bind': str(root.joinpath(group)),
+                        'mode': shared_mode
+                    }
+
         if self.user.name in ADMINS:
             self.volumes[f'/var/lib/dokku/data/storage/{APP_NAME}/data/users'] = {
                 'bind': str(root.joinpath('users')),

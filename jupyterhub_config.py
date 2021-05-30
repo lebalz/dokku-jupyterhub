@@ -7,12 +7,13 @@ from dockerspawner import DockerSpawner
 
 PREFIX = 'hfr'
 ADMINS = set(['balthasar-hofer--gbsl-ch'])
-APP_NAME = f'{PREFIX}-jupyterhub'
 HOME_PATH = '/home/jovyan/work'
+APP_NAME = f'{PREFIX}-jupyterhub'
+APP_ROOT_HOST = f'/var/lib/dokku/data/storage/{APP_NAME}'
 
 VOLUME_GROUPS = {
     'data-science': [
-        f'/var/lib/dokku/data/storage/{APP_NAME}/unbackuped-data/cc-webvideo-dataset'
+        f'{APP_ROOT_HOST}/groups/data-science'
     ]
 }
 
@@ -33,23 +34,29 @@ class MyDockerSpawner(DockerSpawner):
         root = Path(notebook_dir)
         # basic volumes
         self.volumes = {
-            f'/var/lib/dokku/data/storage/{APP_NAME}/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
-            f'/var/lib/dokku/data/storage/{APP_NAME}/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
-            f'/var/lib/dokku/data/storage/{APP_NAME}/data/shared': {'bind': str(root.joinpath('shared')), 'mode': shared_mode},
-            f'/var/lib/dokku/data/storage/{APP_NAME}/data/colab': {'bind': str(root.joinpath('colab')), 'mode': 'rw'}
+            f'{APP_ROOT_HOST}/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
+            f'{APP_ROOT_HOST}/data/user-settings/{username}': {'bind': '/home/jovyan/.jupyter/lab', 'mode': 'rw'},
+            f'{APP_ROOT_HOST}/data/shared': {'bind': str(root.joinpath('shared')), 'mode': shared_mode},
+            f'{APP_ROOT_HOST}/data/colab': {'bind': str(root.joinpath('colab')), 'mode': 'rw'}
         }
 
         # additional volumes for assigned students only
         if self.user.name in MEMBERSHIPS:
             for group in MEMBERSHIPS[self.user.name]:
                 for group_dir in VOLUME_GROUPS[group]:
+                    # make a relative path to mount, e.g.
+                    #   /var/lib/dokku/data/storage/jupyterhub/groups/data-science/
+                    # will be mounted to
+                    #   /groups/data-science/
+                    parts = Path(group_dir).relative_to(APP_ROOT_HOST)
+
                     self.volumes[group_dir] = {
-                        'bind': str(root.joinpath(group)),
+                        'bind': str(root.joinpath(*parts)),
                         'mode': shared_mode
                     }
 
         if self.user.name in ADMINS:
-            self.volumes[f'/var/lib/dokku/data/storage/{APP_NAME}/data/users'] = {
+            self.volumes[f'{APP_ROOT_HOST}/data/users'] = {
                 'bind': str(root.joinpath('users')),
                 'mode': 'rw'
             }

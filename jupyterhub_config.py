@@ -48,7 +48,7 @@ class MyDockerSpawner(DockerSpawner):
                     #   /var/lib/dokku/data/storage/jupyterhub/groups/data-science/
                     # will be mounted to
                     #   /groups/data-science/
-                    parts = Path(group_dir).relative_to(APP_ROOT_HOST)
+                    parts = Path(group_dir).relative_to(APP_ROOT_HOST).parts
 
                     self.volumes[group_dir] = {
                         'bind': str(root.joinpath(*parts)),

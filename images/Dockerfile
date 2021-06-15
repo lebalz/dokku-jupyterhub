@@ -5,6 +5,8 @@ LABEL maintainer="hfr"
 LABEL version="0.1.1"
 LABEL description="Jupyter Notebook image"
 
+RUN apt-get update -y && apt-get install libegl-mesa0 -y
+
 # all additional pip packages
 RUN pip3 install --no-cache \
     jupyterhub==1.4.1 \

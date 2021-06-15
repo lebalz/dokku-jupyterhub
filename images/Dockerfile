@@ -6,7 +6,7 @@ LABEL version="0.1.1"
 LABEL description="Jupyter Notebook image"
 
 USER root
-RUN apt-get update -y && apt-get install libegl-mesa0 -y
+RUN apt-get update -y && apt-get install -y --no-install-recommends apt-utils && apt-get install -y libegl-mesa0
 USER jovyan
 # all additional pip packages
 RUN pip3 install --no-cache \

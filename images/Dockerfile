@@ -5,8 +5,9 @@ LABEL maintainer="hfr"
 LABEL version="0.1.1"
 LABEL description="Jupyter Notebook image"
 
+USER root
 RUN apt-get update -y && apt-get install libegl-mesa0 -y
-
+USER jovyan
 # all additional pip packages
 RUN pip3 install --no-cache \
     jupyterhub==1.4.1 \
@@ -26,6 +27,7 @@ RUN pip3 install --no-cache \
     jupyterlab-spellchecker==0.5.2 \
     aquirdturtle_collapsible_headings==3.0.1 \
     scipy==1.6.3 \
+    ipyevents==0.8.2 \
     jupylet==0.8.8
 
 #   PGPLOT

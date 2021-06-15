@@ -23,7 +23,14 @@ RUN pip3 install --no-cache \
     ipympl==0.7.0 \
     jupyterlab-spellchecker==0.5.2 \
     aquirdturtle_collapsible_headings==3.0.1 \
-    scipy==1.6.3
+    scipy==1.6.3 \
+    jupylet==0.8.8
+
+#   PGPLOT
+# RUN pip3 install --no- \
+#     traitlets==4.3.3 \
+#     traittypes==0.2.1 \
+#     bqplot==0.12.26
     
 
 

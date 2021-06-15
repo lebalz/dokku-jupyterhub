@@ -6,7 +6,7 @@ LABEL version="0.1.1"
 LABEL description="Jupyter Notebook image"
 
 USER root
-RUN apt-get update -y && apt-get install -y --no-install-recommends apt-utils && apt-get install -y libegl-mesa0
+RUN apt-get update -y && apt-get install -y --no-install-recommends apt-utils && apt-get install -y libegl-mesa0 libgl1-mesa-glx
 USER jovyan
 # all additional pip packages
 RUN pip3 install --no-cache \
@@ -35,6 +35,8 @@ RUN pip3 install --no-cache \
 #     traitlets==4.3.3 \
 #     traittypes==0.2.1 \
 #     bqplot==0.12.26
+
+RUN jupyter nbextension enable --py --sys-prefix ipyevents
     
 
 

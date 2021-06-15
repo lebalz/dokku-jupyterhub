@@ -5,9 +5,6 @@ LABEL maintainer="hfr"
 LABEL version="0.1.1"
 LABEL description="Jupyter Notebook image"
 
-USER root
-RUN apt-get update -y && apt-get install -y --no-install-recommends apt-utils && apt-get install -y libegl-mesa0 libgl1-mesa-glx
-USER jovyan
 # all additional pip packages
 RUN pip3 install --no-cache \
     jupyterhub==1.4.1 \
@@ -26,7 +23,10 @@ RUN pip3 install --no-cache \
     ipympl==0.7.0 \
     jupyterlab-spellchecker==0.5.2 \
     aquirdturtle_collapsible_headings==3.0.1 \
-    scipy==1.6.3
+    scipy==1.6.3 \
+    lckr-jupyterlab-variableinspector==3.0.9 \
+    jupyterlab-lsp==3.7.0 \
+    'python-lsp-server[all]'==1.0.1
 
 #   PGPLOT
 # RUN pip3 install --no- \

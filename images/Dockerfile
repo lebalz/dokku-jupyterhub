@@ -26,7 +26,8 @@ RUN pip3 install --no-cache \
     scipy==1.6.3 \
     lckr-jupyterlab-variableinspector==3.0.9 \
     jupyterlab-lsp==3.7.0 \
-    'python-lsp-server[all]'==1.0.1
+    'python-lsp-server[all]'==1.0.1 \
+    mobilechelonian==0.5
 
 #   PGPLOT
 # RUN pip3 install --no- \

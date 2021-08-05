@@ -25,7 +25,7 @@ RUN pip3 install --no-cache \
     aquirdturtle_collapsible_headings==3.0.1 \
     scipy==1.6.3 \
     lckr-jupyterlab-variableinspector==3.0.9 \
-    jupyterlab-lsp==3.8.0 \
+    jupyterlab-lsp==3.8.1 \
     'python-lsp-server[all]'==1.1.0 \
     ipycanvas==0.9.0\
     orjson==3.6.0

@@ -2,14 +2,14 @@ FROM jupyter/minimal-notebook:latest
 
 
 LABEL maintainer="hfr"
-LABEL version="0.1.1"
+LABEL version="0.1.2"
 LABEL description="Jupyter Notebook image"
 
 # all additional pip packages
 RUN pip3 install --no-cache \
     jupyterhub==1.4.2 \
     smartphone-connector==0.0.115 \
-    notebook==6.4.0 \
+    notebook==6.4.2 \
     playsound==1.2.2 \
     numpy==1.20.3 \
     gTTs==2.2.2 \
@@ -21,12 +21,12 @@ RUN pip3 install --no-cache \
     openpyxl==3.0.7 \
     ipywidgets==7.6.3 \
     ipympl==0.7.0 \
-    jupyterlab-spellchecker==0.6.0 \
+    jupyterlab-spellchecker==0.7.0 \
     aquirdturtle_collapsible_headings==3.0.1 \
     scipy==1.6.3 \
     lckr-jupyterlab-variableinspector==3.0.9 \
     jupyterlab-lsp==3.8.1 \
-    'python-lsp-server[all]'==1.1.0 \
+    'python-lsp-server[all]'==1.2.1 \
     ipycanvas==0.9.0\
     orjson==3.6.0
 

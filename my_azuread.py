@@ -8,6 +8,8 @@ Custom Authenticator to use Azure AD with JupyterHub
 import json
 import jwt
 import urllib
+# import logging
+# logging.basicConfig(filename='example_jwt.log', encoding='utf8', level=logging.DEBUG)
 
 from tornado.httpclient import HTTPRequest, AsyncHTTPClient
 
@@ -91,7 +93,7 @@ class MyAzureAdOAuthenticator(AzureAdOAuthenticator):
         access_token = resp_json['access_token']
 
         id_token = resp_json['id_token']
-        decoded = jwt.decode(id_token, verify=False)
+        decoded = jwt.decode(id_token, options={"verify_signature": False})
         cleaned_name = sanitized_username(decoded[self.username_claim])
 
         userdict = {"name": cleaned_name}

@@ -9,7 +9,7 @@ LABEL description="Jupyter Notebook image"
 RUN pip3 install --no-cache \
     jupyterhub==1.4.2 \
     smartphone-connector==0.0.115 \
-    notebook==6.4.2 \
+    notebook==6.4.4 \
     playsound==1.2.2 \
     numpy==1.20.3 \
     gTTs==2.2.2 \
@@ -19,14 +19,14 @@ RUN pip3 install --no-cache \
     pandas==1.2.4 \
     xlrd==2.0.1 \
     openpyxl==3.0.7 \
-    ipywidgets==7.6.3 \
-    ipympl==0.7.0 \
-    jupyterlab-spellchecker==0.7.0 \
+    ipywidgets==7.6.5 \
+    ipympl==0.8.0 \
+    jupyterlab-spellchecker==0.7.1 \
     aquirdturtle_collapsible_headings==3.0.1 \
     scipy==1.6.3 \
     lckr-jupyterlab-variableinspector==3.0.9 \
     jupyterlab-lsp==3.8.1 \
-    'python-lsp-server[all]'==1.2.1 \
+    'python-lsp-server[all]'==1.2.3 \
     ipycanvas==0.9.0\
     orjson==3.6.0
 

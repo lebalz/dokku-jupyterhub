@@ -27,7 +27,9 @@ DOMAIN="your.domain.com"
 
 dokku apps:create $APP
 # ensure docker networks can be used
-dokku config:set $APP DOCKER_SCHEDULER=docker-local
+# version for dokku versionn < v26
+# dokku config:set $APP DOCKER_SCHEDULER=docker-local
+dokku scheduler:set $APP selected docker-local
 
 # configure port map for accessing hub
 dokku config:set $APP DOKKU_PROXY_PORT_MAP="http:80:8000"

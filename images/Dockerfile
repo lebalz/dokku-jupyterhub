@@ -1,8 +1,8 @@
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/minimal-notebook:hub-2.2.2
 
 
 LABEL maintainer="hfr"
-LABEL version="0.1.2"
+LABEL version="0.1.3"
 LABEL description="Jupyter Notebook image"
 
 # all additional pip packages

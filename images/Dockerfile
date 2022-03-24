@@ -7,28 +7,27 @@ LABEL description="Jupyter Notebook image"
 
 # all additional pip packages
 RUN pip3 install --no-cache \
-    jupyterhub==1.4.2 \
+    jupyterhub==2.2.2 \
     smartphone-connector==0.0.115 \
-    notebook==6.4.4 \
+    notebook==6.4.10 \
     playsound==1.2.2 \
-    numpy==1.20.3 \
+    numpy==1.22.3 \
     gTTs==2.2.2 \
     jupyterlab-drawio==0.9.0 \
-    Pillow==8.2.0 \
-    XlsxWriter==1.4.3 \
-    pandas==1.2.4 \
+    Pillow==9.0.1 \
+    XlsxWriter==3.0.3 \
+    pandas==1.4.1 \
     xlrd==2.0.1 \
-    openpyxl==3.0.7 \
-    ipywidgets==7.6.5 \
-    ipympl==0.8.0 \
-    jupyterlab-spellchecker==0.7.1 \
-    aquirdturtle_collapsible_headings==3.0.1 \
-    scipy==1.6.3 \
+    openpyxl==3.0.9 \
+    ipywidgets==7.7.0 \
+    ipympl==0.8.8 \
+    jupyterlab-spellchecker==0.7.2 \
+    scipy==1.8.0 \
     lckr-jupyterlab-variableinspector==3.0.9 \
-    jupyterlab-lsp==3.8.1 \
-    'python-lsp-server[all]'==1.2.3 \
-    ipycanvas==0.9.0\
-    orjson==3.6.0
+    jupyterlab-lsp==3.10.1 \
+    'python-lsp-server[all]'==1.4.0 \
+    ipycanvas==0.11.0\
+    orjson==3.6.7
 
 #   PGPLOT
 # RUN pip3 install --no- \

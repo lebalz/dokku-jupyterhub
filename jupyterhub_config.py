@@ -18,13 +18,11 @@ VOLUME_GROUPS = {
 }
 
 MEMBERSHIPS = {
-    'balthasar-hofer--gbsl-ch': set(['data-science']),
-    'gael-schwab--edu-gbsl-ch': set(['data-science'])
+    'balthasar-hofer--gbsl-ch': set(['data-science'])
 }
 
 PERFORMANCE_LIMITS = {
-    'balthasar-hofer--gbsl-ch': '8G',
-    'gael-schwab--edu-gbsl-ch': '1G'
+    'balthasar-hofer--gbsl-ch': '8G'
 }
 
 

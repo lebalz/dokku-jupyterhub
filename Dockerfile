@@ -4,11 +4,11 @@ FROM jupyterhub/jupyterhub:1.4.2
 # Install dependencies (for advanced authentication and spawning)
 RUN pip3 install \
     dockerspawner==12.1.0 \
-    oauthenticator==14.1.0 \
-    jupyterhub-idle-culler==1.1 \
-    psycopg2-binary==2.9.1
+    oauthenticator==14.2.0 \
+    jupyterhub-idle-culler==1.2.1 \
+    psycopg2-binary==2.9.3
 
-RUN pip3 install oauthenticator==14.1.0 PyJWT==2.1.0
+RUN pip3 install PyJWT==2.3.0
 
 # Copy the custom authenticator
 

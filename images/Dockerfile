@@ -28,7 +28,7 @@ RUN pip3 install --no-cache \
     'python-lsp-server[all]'==1.4.0 \
     ipycanvas==0.11.0\
     orjson==3.6.7\
-    graphviz=0.20
+    graphviz==0.20
 
 #   PGPLOT
 # RUN pip3 install --no- \

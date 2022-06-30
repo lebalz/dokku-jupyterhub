@@ -31,6 +31,7 @@ RUN pip3 install --no-cache \
     graphviz==0.20\
     termcolor==1.1.0
 
+RUN apt-get update && apt-get install graphviz
 #   PGPLOT
 # RUN pip3 install --no- \
 #     traitlets==4.3.3 \

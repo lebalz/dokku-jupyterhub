@@ -5,6 +5,12 @@ LABEL maintainer="hfr"
 LABEL version="0.1.3"
 LABEL description="Jupyter Notebook image"
 
+
+USER root
+RUN apt-get update && apt-get install graphviz
+
+USER jovyan
+
 # all additional pip packages
 RUN pip3 install --no-cache \
     jupyterhub==2.2.2 \
@@ -31,7 +37,6 @@ RUN pip3 install --no-cache \
     graphviz==0.20\
     termcolor==1.1.0
 
-RUN sudo apt-get update && sudo apt-get install graphviz
 #   PGPLOT
 # RUN pip3 install --no- \
 #     traitlets==4.3.3 \

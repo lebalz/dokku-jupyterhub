@@ -3,7 +3,8 @@ FROM jupyterhub/jupyterhub:2.2.2
 
 
 USER root
-RUN apt-get update && apt-get install graphviz
+
+RUN apt-get update -y && apt-get install -y graphviz
 
 USER jovyan
 

@@ -6,6 +6,7 @@ LABEL version="0.1.3"
 LABEL description="Jupyter Notebook image"
 
 USER root
+# graphviz and graphviz-dev is needed for use with jupyterlab
 RUN apt-get update -y && apt-get install -y graphviz graphviz-dev
 USER jovyan
 

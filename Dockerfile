@@ -2,11 +2,7 @@
 FROM jupyterhub/jupyterhub:2.2.2
 
 
-USER root
-
 RUN apt-get update -y && apt-get install -y graphviz
-
-USER jovyan
 
 # Install dependencies (for advanced authentication and spawning)
 RUN pip3 install \

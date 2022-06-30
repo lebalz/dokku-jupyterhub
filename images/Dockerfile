@@ -27,7 +27,8 @@ RUN pip3 install --no-cache \
     jupyterlab-lsp==3.10.1 \
     'python-lsp-server[all]'==1.4.0 \
     ipycanvas==0.11.0\
-    orjson==3.6.7
+    orjson==3.6.7\
+    graphviz=0.20
 
 #   PGPLOT
 # RUN pip3 install --no- \

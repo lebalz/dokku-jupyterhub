@@ -1,6 +1,12 @@
 # Do not forget to pin down the version
 FROM jupyterhub/jupyterhub:2.2.2
 
+
+USER root
+RUN apt-get update && apt-get install graphviz
+
+USER jovyan
+
 # Install dependencies (for advanced authentication and spawning)
 RUN pip3 install \
     dockerspawner==12.1.0 \

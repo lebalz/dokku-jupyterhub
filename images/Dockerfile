@@ -1,7 +1,7 @@
 FROM jupyter/minimal-notebook:hub-2.2.2
 
 
-LABEL maintainer="hfr"
+LABEL maintainer="scf"
 LABEL version="0.1.3"
 LABEL description="Jupyter Notebook image"
 

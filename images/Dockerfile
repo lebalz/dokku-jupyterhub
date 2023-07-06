@@ -16,7 +16,7 @@ RUN pip3 install --no-cache \
     smartphone-connector==0.0.115 \
     notebook==6.5.4 \
     playsound==1.2.2 \
-    numpy==1.22.3 \
+    numpy==1.25.0 \
     gTTs==2.2.2 \
     jupyterlab-drawio==0.9.0 \
     Pillow==9.0.1 \
@@ -34,7 +34,7 @@ RUN pip3 install --no-cache \
     ipycanvas==0.13.1\
     orjson==3.9.1\
     graphviz==0.20\
-    termcolor==1.1.0
+    termcolor==2.3.0
 
 #   PGPLOT
 # RUN pip3 install --no- \

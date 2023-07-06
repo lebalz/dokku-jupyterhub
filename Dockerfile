@@ -1,5 +1,5 @@
 # Do not forget to pin down the version
-FROM jupyterhub/jupyterhub:2.2.2
+FROM jupyterhub/jupyterhub:4.0.1
 
 
 # Install dependencies (for advanced authentication and spawning)

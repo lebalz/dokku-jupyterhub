@@ -1,8 +1,8 @@
-FROM jupyter/minimal-notebook:hub-2.2.2
+FROM jupyter/minimal-notebook:hub-4.0.2
 
 
 LABEL maintainer="hfr"
-LABEL version="0.1.3"
+LABEL version="0.1.4"
 LABEL description="Jupyter Notebook image"
 
 USER root
@@ -12,9 +12,9 @@ USER jovyan
 
 # all additional pip packages
 RUN pip3 install --no-cache \
-    jupyterhub==2.2.2 \
+    jupyterhub==4.0.1 \
     smartphone-connector==0.0.115 \
-    notebook==6.4.10 \
+    notebook==6.5.4 \
     playsound==1.2.2 \
     numpy==1.22.3 \
     gTTs==2.2.2 \
@@ -26,12 +26,12 @@ RUN pip3 install --no-cache \
     openpyxl==3.0.9 \
     ipywidgets==7.7.0 \
     ipympl==0.8.8 \
-    jupyterlab-spellchecker==0.7.2 \
+    jupyterlab-spellchecker==0.8.3 \
     scipy==1.8.0 \
     lckr-jupyterlab-variableinspector==3.0.9 \
-    jupyterlab-lsp==3.10.1 \
-    'python-lsp-server[all]'==1.4.0 \
-    ipycanvas==0.11.0\
+    jupyterlab-lsp==4.2.0 \
+    'python-lsp-server[all]'==1.7.4 \
+    ipycanvas==0.13.1\
     orjson==3.6.7\
     graphviz==0.20\
     termcolor==1.1.0

@@ -19,13 +19,13 @@ RUN pip3 install --no-cache \
     numpy==1.25.0 \
     gTTs==2.2.2 \
     jupyterlab-drawio==0.9.0 \
-    Pillow==9.0.1 \
-    XlsxWriter==3.0.3 \
-    pandas==1.4.1 \
+    Pillow==10.0.0 \
+    XlsxWriter==3.1.2 \
+    pandas==2.0.3 \
     xlrd==2.0.1 \
-    openpyxl==3.0.9 \
-    ipywidgets==7.7.0 \
-    ipympl==0.8.8 \
+    openpyxl==3.1.2 \
+    ipywidgets==8.0.7 \
+    ipympl==0.9.3 \
     jupyterlab-spellchecker==0.8.3 \
     scipy==1.11.1 \
     lckr-jupyterlab-variableinspector==3.0.9 \

@@ -1,4 +1,4 @@
-FROM jupyter/minimal-notebook:hub-4.0.2
+FROM jupyter/minimal-notebook:lab-4.0.2
 
 
 LABEL maintainer="hfr"

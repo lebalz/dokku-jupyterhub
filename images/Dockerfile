@@ -19,7 +19,6 @@ RUN pip3 install --no-cache \
     playsound==1.2.2 \
     numpy==1.25.0 \
     gTTs==2.2.2 \
-    jupyterlab-drawio==0.9.0 \
     Pillow==10.0.0 \
     XlsxWriter==3.1.2 \
     pandas==2.0.3 \

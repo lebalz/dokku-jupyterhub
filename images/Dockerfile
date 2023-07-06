@@ -2,7 +2,7 @@ FROM jupyter/minimal-notebook:lab-4.0.2
 
 
 LABEL maintainer="hfr"
-LABEL version="0.1.4"
+LABEL version="0.1.5"
 LABEL description="Jupyter Notebook image"
 
 USER root
@@ -27,7 +27,7 @@ RUN pip3 install --no-cache \
     ipywidgets==7.7.0 \
     ipympl==0.8.8 \
     jupyterlab-spellchecker==0.8.3 \
-    scipy==1.8.0 \
+    scipy==1.11.1 \
     lckr-jupyterlab-variableinspector==3.0.9 \
     jupyterlab-lsp==4.2.0 \
     'python-lsp-server[all]'==1.7.4 \

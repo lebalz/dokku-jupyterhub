@@ -2,7 +2,7 @@ FROM jupyter/minimal-notebook:lab-4.0.2
 
 
 LABEL maintainer="hfr"
-LABEL version="0.1.5"
+LABEL version="0.1.6"
 LABEL description="Jupyter Notebook image"
 
 USER root
@@ -13,6 +13,7 @@ USER jovyan
 # all additional pip packages
 RUN pip3 install --no-cache \
     jupyterhub==4.0.1 \
+    jupyterlab==4.0.2 \
     smartphone-connector==0.0.115 \
     notebook==6.5.4 \
     playsound==1.2.2 \

@@ -28,7 +28,7 @@ RUN pip3 install --no-cache \
     ipympl==0.9.3 \
     jupyterlab-spellchecker==0.8.3 \
     scipy==1.11.1 \
-    lckr-jupyterlab-variableinspector==3.0.9 \
+    # lckr-jupyterlab-variableinspector==3.0.9 \
     jupyterlab-lsp==4.2.0 \
     'python-lsp-server[all]'==1.7.4 \
     ipycanvas==0.13.1\

@@ -32,7 +32,7 @@ RUN pip3 install --no-cache \
     jupyterlab-lsp==4.2.0 \
     'python-lsp-server[all]'==1.7.4 \
     ipycanvas==0.13.1\
-    orjson==3.6.7\
+    orjson==3.9.1\
     graphviz==0.20\
     termcolor==1.1.0
 

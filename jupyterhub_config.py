@@ -175,7 +175,7 @@ c.JupyterHub.db_url = os.environ['DATABASE_URL']
 
 # Whitlelist users and admins
 c.Authenticator.admin_users = ADMINS
-
+c.Authenticator.allow_all = True
 # admin can access all other users
 c.JupyterHub.admin_access = True
 

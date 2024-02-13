@@ -94,6 +94,8 @@ dokku config:set $APP AAD_OAUTH_CALLBACK_URL="https://$DOMAIN/hub/oauth_callback
 dokku config:set $APP AAD_CLIENT_ID="xxxxxx-xxxxxx-xxxxxxx"
 dokku config:set $APP AAD_CLIENT_SECRET="xxxxxx-xxxxxx-xxxxxxx"
 
+# configure port map for accessing hub
+dokku ports:add $APP http:80:8000
 ```
 
 ## Images

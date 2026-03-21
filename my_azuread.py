@@ -1,17 +1,12 @@
 """
 Custom Authenticator to use Azure AD with JupyterHub
 
-""""""
-Custom Authenticator to use Azure AD with JupyterHub
-
 """
 import json
 import jwt
 import urllib
 # import logging
 # logging.basicConfig(filename='example_jwt.log', encoding='utf8', level=logging.DEBUG)
-
-from tornado.httpclient import HTTPRequest, AsyncHTTPClient
 
 from jupyterhub.auth import LocalAuthenticator
 
@@ -61,7 +56,6 @@ class MyAzureAdOAuthenticator(AzureAdOAuthenticator):
 
     async def authenticate(self, handler, data=None):
         code = handler.get_argument("code")
-        http_client = AsyncHTTPClient()
 
         params = dict(
             client_id=self.client_id,
@@ -79,15 +73,14 @@ class MyAzureAdOAuthenticator(AzureAdOAuthenticator):
             'Content-Type':
             'application/x-www-form-urlencoded; charset=UTF-8'
         }
-        req = HTTPRequest(
+
+        resp_json = await self.httpfetch(
             url,
             method="POST",
             headers=headers,
-            body=data  # Body is required for a POST...
+            body=data,
+            label="fetching access token",
         )
-
-        resp = await http_client.fetch(req)
-        resp_json = json.loads(resp.body.decode('utf8', 'replace'))
 
         # app_log.info("Response %s", resp_json)
         access_token = resp_json['access_token']

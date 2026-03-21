@@ -1,7 +1,7 @@
 FROM jupyter/minimal-notebook:lab-4.0.7
 
 LABEL maintainer="hfr"
-LABEL version="latest"
+LABEL version="1.0.0"
 LABEL description="Jupyter Notebook image"
 
 USER root
@@ -40,4 +40,4 @@ RUN pip3 install --no-cache \
 
 # check where to put the overrides file within a jupyterlab container: 
 #       jupyter lab path
-COPY overrides.json /opt/conda/share/jupyter/lab/settings/
+COPY --chmod=644 overrides.json /opt/conda/share/jupyter/lab/settings/

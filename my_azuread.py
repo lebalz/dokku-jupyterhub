@@ -64,8 +64,7 @@ class MyAzureAdOAuthenticator(AzureAdOAuthenticator):
             code=code,
             redirect_uri=self.get_callback_url(handler))
 
-        data = urllib.parse.urlencode(
-            params, doseq=True, encoding='utf-8', safe='=')
+        body = urllib.parse.urlencode(params).encode('utf-8')
 
         url = azure_token_url_for(self.tenant_id)
 
@@ -78,7 +77,7 @@ class MyAzureAdOAuthenticator(AzureAdOAuthenticator):
             url,
             method="POST",
             headers=headers,
-            body=data,
+            body=body,
             label="fetching access token",
         )
 

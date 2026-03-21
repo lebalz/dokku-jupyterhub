@@ -26,41 +26,35 @@ DOMAIN="your.domain.com"
 ############
 
 dokku apps:create $APP
-# ensure docker networks can be used
-# version for dokku versionn < v26
-# dokku config:set $APP DOCKER_SCHEDULER=docker-local
-dokku scheduler:set $APP selected docker-local
 
-# configure port map for accessing hub
-dokku config:set $APP DOKKU_PROXY_PORT_MAP="http:80:8000"
+dokku ports:add $APP http:80:8000
 
 # mount docker socket to spawn new containers
 dokku storage:mount $APP /var/run/docker.sock:/var/run/docker.sock
-
-# add a domain to it
 dokku domains:add $APP $DOMAIN
+
 
 # create network
 dokku network:create $APP
 dokku network:set $APP bind-all-interfaces true
 
-# attach the network to the app
 dokku network:set $APP attach-post-create $APP
 
 # configure env variables for the network
 dokku config:set $APP DOCKER_NETWORK_NAME=$APP
 dokku config:set $APP HUB_IP=$APP.web
 
+
 # create postgres service
 dokku postgres:create $APP
 dokku postgres:link $APP $APP
+
 ## The URI should start with postgresql:// instead of postgres://. SQLAlchemy used to accept both, but has removed support for the postgres name.
 DB_URL=$(dokku config:get $APP DATABASE_URL)
 dokku config:set --no-restart $APP DATABASE_URL="${DB_URL//postgres:\/\//postgresql:\/\/}"
 
 # configure post deploy script
-dokku config:set --no-restart $APP DOKKU_POST_DEPLOY_SCRIPT_DEPENDENCIES="images/Dockerfile;images/playsound_extension.py;images/gtts_extension.py;images/overrides.json"
-
+dokku config:set --no-restart $APP DOKKU_POST_DEPLOY_SCRIPT_DEPENDENCIES="images/Dockerfile;images/overrides.json"
 # STOARGE AND DATA PERSISTENCE
 ##############################
 
@@ -139,7 +133,7 @@ Make sure:
 ```sh
 MAIL="your@email.address"
 dokku config:set --no-restart $APP DOKKU_LETSENCRYPT_EMAIL=$MAIL
-dokku letsencrypt $APP
+dokku letsencrypt:enable $APP
 ```
 
 

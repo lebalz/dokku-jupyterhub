@@ -35,7 +35,6 @@ class MyDockerSpawner(DockerSpawner):
         else:
             shared_mode = 'ro'
         root = Path(notebook_dir)
-        print(username, notebook_dir, root)
         # basic volumes
         self.volumes = {
             f'{APP_ROOT_HOST}/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
@@ -107,12 +106,13 @@ def set_user_permission(spawner):
     username = spawner.user.name
     container_data = os.environ.get('DATA_VOLUME_CONTAINER', '/data')
     data_root = Path(container_data, 'users')
-    print(f'setting permissions for {username} in {data_root}')
     ensure_dir(data_root)
     ensure_dir(data_root.joinpath(username))
     settings_root = Path(container_data, 'user-settings')
     ensure_dir(settings_root)
     ensure_dir(settings_root.joinpath(username))
+    ensure_dir(Path(container_data, 'shared'))
+    ensure_dir(Path(container_data, 'colab'))
 
 
 c.Spawner.pre_spawn_hook = set_user_permission

@@ -94,11 +94,21 @@ c.DockerSpawner.use_internal_ip = True
 c.DockerSpawner.extra_host_config = {'network_mode': os.environ['DOCKER_NETWORK_NAME']}
 
 
-def ensure_dir(dir_path):
+def ensure_dir(dir_path, recursive=False):
     if not dir_path.exists():
         dir_path.mkdir(exist_ok=True)
     if dir_path.group() != 'users':
         shutil.chown(str(dir_path), user=1000, group=100)
+    if recursive:
+        for root, dirs, files in os.walk(str(dir_path)):
+            for d in dirs:
+                p = os.path.join(root, d)
+                if Path(p).group() != 'users':
+                    shutil.chown(p, user=1000, group=100)
+            for f in files:
+                p = os.path.join(root, f)
+                if Path(p).group() != 'users':
+                    shutil.chown(p, user=1000, group=100)
 
 
 def set_user_permission(spawner):
@@ -110,7 +120,7 @@ def set_user_permission(spawner):
     ensure_dir(data_root.joinpath(username))
     settings_root = Path(container_data, 'user-settings')
     ensure_dir(settings_root)
-    ensure_dir(settings_root.joinpath(username))
+    ensure_dir(settings_root.joinpath(username), recursive=True)
     ensure_dir(Path(container_data, 'shared'))
     ensure_dir(Path(container_data, 'colab'))
 

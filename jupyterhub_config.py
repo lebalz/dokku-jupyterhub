@@ -69,6 +69,18 @@ class MyDockerSpawner(DockerSpawner):
                 'mem_limit': PERFORMANCE_LIMITS[self.user.name],
                 'memswap_limit': '-1'
             }
+
+        # Start as root so the docker-stacks entrypoint can fix
+        # bind-mount ownership, then drop to jovyan via gosu.
+        self.extra_create_kwargs = {**self.extra_create_kwargs, 'user': 'root'}
+        chown_paths = [v['bind'] for v in self.volumes.values() if v.get('mode') == 'rw']
+        self.environment = {
+            **self.environment,
+            'NB_UID': '1000',
+            'NB_GID': '100',
+            'CHOWN_EXTRA': ','.join(chown_paths),
+        }
+
         return super().start()
 
 

@@ -30,12 +30,12 @@ class MyDockerSpawner(DockerSpawner):
 
     def start(self):
         username = self.user.name
-        print(username, notebook_dir, root)
         if self.user.name in ADMINS:
             shared_mode = 'rw'
         else:
             shared_mode = 'ro'
         root = Path(notebook_dir)
+        print(username, notebook_dir, root)
         # basic volumes
         self.volumes = {
             f'{APP_ROOT_HOST}/data/users/{username}': {'bind': notebook_dir, 'mode': 'rw'},
@@ -107,6 +107,7 @@ def set_user_permission(spawner):
     username = spawner.user.name
     container_data = os.environ.get('DATA_VOLUME_CONTAINER', '/data')
     data_root = Path(container_data, 'users')
+    print(f'setting permissions for {username} in {data_root}')
     ensure_dir(data_root)
     ensure_dir(data_root.joinpath(username))
     settings_root = Path(container_data, 'user-settings')

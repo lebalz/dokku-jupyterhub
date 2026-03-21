@@ -30,6 +30,7 @@ class MyDockerSpawner(DockerSpawner):
 
     def start(self):
         username = self.user.name
+        print(username, notebook_dir, root)
         if self.user.name in ADMINS:
             shared_mode = 'rw'
         else:

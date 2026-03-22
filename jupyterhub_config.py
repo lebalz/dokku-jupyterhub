@@ -8,7 +8,7 @@ from dockerspawner import DockerSpawner
 PREFIX = 'hfr'
 ADMINS = set(['balthasar-hofer--gbsl-ch'])
 HOME_PATH = '/home/jovyan/work'
-APP_NAME = f'{PREFIX}-jupyterhub'
+APP_NAME = f'{PREFIX}-jupyter'
 APP_ROOT_HOST = f'/var/lib/dokku/data/storage/{APP_NAME}'
 
 VOLUME_GROUPS = {

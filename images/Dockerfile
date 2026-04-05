@@ -1,7 +1,7 @@
 FROM jupyter/minimal-notebook:lab-4.0.7
 
-LABEL maintainer="hfr"
-LABEL version="1.0.0"
+LABEL maintainer="scf"
+LABEL version="latest"
 LABEL description="Jupyter Notebook image"
 
 USER root
@@ -28,7 +28,9 @@ RUN pip3 install --no-cache \
     ipycanvas==0.14.3\
     orjson==3.11.7\
     graphviz==0.21\
-    termcolor==3.3.0
+    termcolor==3.3.0\
+    colour-science==0.4.7\
+    jupyterlab-lsp==5.3.0
 
 #   PGPLOT
 # RUN pip3 install --no- \

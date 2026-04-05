@@ -25,4 +25,12 @@ COPY POST_DEPLOY_SCRIPT .
 # Copy the notebook dockerfile into the container
 COPY images ./images
 
-RUN jupyterhub upgrade-db
+RUN cat > /entrypoint.sh <<'EOF'
+#!/bin/bash
+set -e
+jupyterhub upgrade-db
+exec jupyterhub "$@"
+EOF
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

@@ -24,3 +24,5 @@ COPY POST_DEPLOY_SCRIPT .
 
 # Copy the notebook dockerfile into the container
 COPY images ./images
+
+jupyterhub upgrade-db

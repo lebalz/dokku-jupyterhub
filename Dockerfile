@@ -12,7 +12,6 @@ RUN pip3 install \
 RUN pip3 install PyJWT==2.12.1
 
 # Copy the custom authenticator
-
 COPY my_azuread.py .
 
 RUN mv my_azuread.py $(dirname "$(python3 -c "import oauthenticator as _; print(_.__file__)")")/my_azuread.py
